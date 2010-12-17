@@ -1,0 +1,52 @@
+sp {propose*print-value
+   (state <s> ^io.input-link.data <d>)
+   (<d> ^dataType |RTC.TimedLong|
+        ^data <v>
+        ^time <t>
+        ^component <c>
+        ^port <p>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name print-value
+        ^data <v>
+        ^time <t>
+        ^component <c>
+        ^port <p>)
+}
+
+sp {propose*remove*old-print-value
+   (state <s> ^operator <o1>
+              ^operator <o2>)
+   (<o1> ^name print-value
+         ^component <c>
+         ^port <p>
+         ^time <t1>)
+   (<o2> ^name print-value
+         ^component <c>
+         ^port <p>
+         ^time < <t1>)
+-->
+   (<s> ^operator <o2> -)
+}
+
+sp {elaborate*bigger-value
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name print-value
+         ^data <v1>)
+   (<o2> ^name print-value
+         ^data < <v1>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}
+
+sp {apply*print-value
+   (state <s> ^operator <o>)
+   (<o> ^name print-value
+        ^data <v>
+        ^component <c>
+        ^port <p>)
+-->
+   (write |Max value | <v> |, Component | <c> |, Port | <p>)
+}
+

@@ -1,0 +1,38 @@
+sp {propose*emergency
+   (state <s> ^io.input-link.data <d>)
+   (<d> ^dataType |RTC.TimedString|
+        ^data emergency
+        ^time <t>
+        ^component <c>
+        ^port <p>)
+-->
+   (<s> ^operator <o> + >)
+   (<o> ^name emergency
+        ^time <t>
+        ^component <c>
+        ^port <p>)
+}
+
+sp {propose*remove*old-emergency
+   (state <s> ^io.input-link.data <d>
+              ^operator <o>)
+   (<d> ^dataType |RTC.TimedString|
+        ^data <> emergency
+        ^time <t>
+        ^component <c>
+        ^port <p>)
+   (<o> ^name emergency
+        ^time < <t>
+        ^component <c>
+        ^port <p>)
+-->
+   (<s> ^operator <o> -)
+}
+
+sp {apply*print-emergency
+   (state <s> ^operator <o>)
+   (<o> ^name emergency)
+-->
+   (write |Emergency!!!|)
+}
+
